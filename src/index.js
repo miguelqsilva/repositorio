@@ -7,11 +7,16 @@ const cors = require(`cors`);
 const path = require(`path`);
 const routes = require(`./routes/routes`);
 const db = require(`./db/db`);
+const corsOptions = {
+origin: [`http://localhost:3333`, `https://meudominio.com`], //Lista de origens permitidas
+methods: `GET,POST,PUT,DELETE`, //método HTTP permitidos
+Credentials: true, //Permite o envio de cookies
+};
 // Inicialização do aplicativo
 const app = express();
 // Middleware de segurança e utilidades
 app.use(helmet()); // protege a aplicação com headers de segurança
-app.use(cors()); // habilidade o cors
+app.use(cors(corsOptions)); // habilidade o cors
 app.use(morgam(`dev`)); // Loga as requisições no console
 app.use(express.json()); // Converte os dados recebidos para JSON
 
