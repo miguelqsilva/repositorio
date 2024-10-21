@@ -7,10 +7,11 @@ const cors = require(`cors`);
 const path = require(`path`);
 const routes = require(`./routes/routes`);
 const db = require(`./db/db`);
+const clienteRoutes = require(`./routes/clienteroutes`);
 const corsOptions = {
-origin: [`http://localhost:3333`, `https://meudominio.com`], //Lista de origens permitidas
-methods: `GET,POST,PUT,DELETE`, //método HTTP permitidos
-Credentials: true, //Permite o envio de cookies
+    origin: [`http://localhost:3333`, `https://meudominio.com`], //Lista de origens permitidas
+    methods: `GET,POST,PUT,DELETE`, //método HTTP permitidos
+    Credentials: true, //Permite o envio de cookies
 };
 // Inicialização do aplicativo
 const app = express();
@@ -25,10 +26,12 @@ app.use(express.static(path.join(__dirname, `public`))); //Pasta de arquivos est
 app.get(`/`, (req, res) => {
     res.sendfile(path.join(__dirname, `pages`, `home.html`));
 
-})
+});
 
 // Configuração de rotas
 app.use(`/`, routes);
+app.use(`/`, clienteRoutes); //Usa as rotas de clientes sob o caminho /api/clientes
+
 // Middleware de tratamento de erros
 app.use((err, req, res, next) => {
     console.error(err.stack);
